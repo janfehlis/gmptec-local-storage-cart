@@ -7,19 +7,23 @@
  * - Submit verhindern wenn Cart leer
  * - Cart leeren nach Submit
  *
+ * ✅ Konfiguriert:
+ * - Form ID: 1
+ * - Field ID: 4 (Produkte Textarea)
+ *
  * Setup:
- * 1. Form ID und Field ID unten anpassen
- * 2. Als WP CodeBox Script hochladen (Priority: 30)
- * 3. Conditional: is_page('anfrage')
+ * 1. Als WP CodeBox Script hochladen (Priority: 30)
+ * 2. Conditional: is_page('produktanfrage')
+ * 3. Testen!
  */
 
 class GMPTECCartFormIntegrationMVP {
     constructor(config = {}) {
-        // WICHTIG: Diese IDs anpassen!
+        // ✅ Konfiguriert für dein Formular
         this.config = {
-            formId: 1,              // WSForms Form ID (siehe URL: post=X)
-            productFieldId: 123,    // WSForms Field ID (siehe Field Settings → Advanced → ID)
-            debug: true,            // Console Logging
+            formId: 1,              // WSForms Form ID
+            productFieldId: 4,      // WSForms Field ID (Produkte Textarea)
+            debug: true,            // Console Logging aktiviert
             ...config
         };
 
@@ -146,14 +150,14 @@ class GMPTECCartFormIntegrationMVP {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             window.gmptecCartFormMVP = new GMPTECCartFormIntegrationMVP({
-                formId: 1,           // ← ANPASSEN!
-                productFieldId: 123   // ← ANPASSEN!
+                formId: 1,           // ✅ Konfiguriert
+                productFieldId: 4     // ✅ Konfiguriert
             });
         });
     } else {
         window.gmptecCartFormMVP = new GMPTECCartFormIntegrationMVP({
-            formId: 1,           // ← ANPASSEN!
-            productFieldId: 123   // ← ANPASSEN!
+            formId: 1,           // ✅ Konfiguriert
+            productFieldId: 4     // ✅ Konfiguriert
         });
     }
 })();
