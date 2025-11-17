@@ -1,0 +1,29 @@
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Claude Code
+.claude/settings.local.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+
+# WordPress specific (if needed)
+wp-config.php
+.htaccess
+
+# Node modules (future use)
+node_modules/
+
+# Environment files
+.env
+.env.local
