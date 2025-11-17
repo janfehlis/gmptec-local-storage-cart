@@ -96,6 +96,30 @@ class GMPTECCartFormIntegrationMVP {
         });
 
         this.log('✅ All event handlers registered');
+
+        // Sofort befüllen wenn Formular schon gerendert ist
+        this.checkAndPopulateImmediately();
+    }
+
+    checkAndPopulateImmediately() {
+        const $ = jQuery;
+        const form = $(`.wsf-form[data-id="${this.config.formId}"]`);
+
+        if (form.length === 0) {
+            this.log('⚠️ Form not found for immediate population');
+            return;
+        }
+
+        // Prüfen ob bereits gerendert (data-wsf-rendered Attribut)
+        const isRendered = form.attr('data-wsf-rendered') !== undefined;
+
+        if (isRendered) {
+            const instanceId = form.data('instance-id') || 1;
+            this.log(`✨ Form already rendered, populating immediately (instance: ${instanceId})`);
+            this.populateProductField(instanceId);
+        } else {
+            this.log('⏳ Form not yet rendered, waiting for wsf-rendered event...');
+        }
     }
 
     populateProductField(instance_id) {
