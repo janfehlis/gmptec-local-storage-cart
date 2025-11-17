@@ -11,10 +11,38 @@
 - Name: "Produktanfrage MVP"
 
 ### 1.2 Felder hinzufügen (Minimal!)
-1. **Name** (Text, Required)
-2. **E-Mail** (Email, Required)
-3. **Produkte** (Textarea, Required) ← WICHTIG!
-4. Submit Button
+
+**Feld 1: Name**
+- Field Type: `Text`
+- Required: ✅ Ja
+
+**Feld 2: E-Mail**
+- Field Type: `Email`
+- Required: ✅ Ja
+
+**Feld 3: Produkte** ← WICHTIG!
+- Field Type: `Textarea` (NICHT Text!)
+- Label: "Ausgewählte Produkte"
+- Required: ✅ Ja
+- Rows: 5-10 (für mehrere Produkte)
+- Readonly: Optional (verhindert User-Bearbeitung)
+
+**Feld 4: Submit Button**
+- Standard Submit Button
+
+**⚠️ Warum Textarea und nicht Text?**
+
+Textarea erlaubt mehrere Zeilen, perfekt für mehrere Produkte:
+```
+Produkt 1
+Produkt 2
+Produkt 3
+```
+
+Text-Field würde alle Produkte in eine Zeile quetschen:
+```
+Produkt 1, Produkt 2, Produkt 3  ← Schwer lesbar!
+```
 
 ### 1.3 IDs notieren
 - **Form ID:** Oben rechts in URL (z.B. `post=1` → Form ID = `1`)
