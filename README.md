@@ -208,7 +208,7 @@ Requires LocalStorage support (all modern browsers).
 
 ## Contributing
 
-This is a private project for GMPTEC. For questions or issues, please contact the development team.
+This is a private project developed for GMPTEC client work. For questions or issues, please contact the developer.
 
 ## Documentation
 
@@ -217,4 +217,6 @@ This is a private project for GMPTEC. For questions or issues, please contact th
 
 ## License
 
-Proprietary - All rights reserved GMPTEC
+Copyright (c) 2025 Jan-Hinrich Fehlis. All rights reserved.
+
+This software is proprietary and confidential. Unauthorized copying, distribution, modification, or use of this software, via any medium, is strictly prohibited without explicit written permission from the copyright holder.
