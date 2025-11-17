@@ -6,6 +6,7 @@
  * - Produkte ins Formular übertragen beim Load
  * - Submit verhindern wenn Cart leer
  * - Cart leeren nach Submit
+ * - Wartet automatisch auf Formular (Bricks Builder kompatibel)
  *
  * ✅ Konfiguriert:
  * - Form ID: 1
@@ -13,7 +14,7 @@
  *
  * Setup:
  * 1. Als WP CodeBox Script hochladen (Priority: 30)
- * 2. Conditional: is_page('produktanfrage')
+ * 2. Conditional: is_page('anfrage')  ← Deinen Page Slug prüfen!
  * 3. Testen!
  */
 
@@ -136,29 +137,37 @@ class GMPTECCartFormIntegrationMVP {
 // ===== AUTO-INITIALIZATION =====
 
 (function initMVP() {
-    // Prüfen ob wir auf einer Seite mit WSForms sind
-    const hasForm = document.querySelector('.wsf-form');
+    console.log('[GMPTEC Form MVP] Starting initialization...');
 
-    if (!hasForm) {
-        console.log('[GMPTEC Form MVP] No WSForm found on this page, skipping...');
-        return;
-    }
+    // Warte auf WSForms (Bricks Builder lädt es async)
+    let attempts = 0;
+    const maxAttempts = 50; // 5 Sekunden max (50 x 100ms)
 
-    console.log('[GMPTEC Form MVP] WSForm detected, initializing...');
+    function waitForForm() {
+        attempts++;
+        const hasForm = document.querySelector('.wsf-form');
 
-    // Initialize sobald DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
+        if (hasForm) {
+            console.log('[GMPTEC Form MVP] ✅ WSForm found after', attempts, 'attempts');
+            console.log('[GMPTEC Form MVP] Initializing integration...');
+
             window.gmptecCartFormMVP = new GMPTECCartFormIntegrationMVP({
                 formId: 1,           // ✅ Konfiguriert
                 productFieldId: 4     // ✅ Konfiguriert
             });
-        });
+        } else if (attempts < maxAttempts) {
+            console.log('[GMPTEC Form MVP] ⏳ Waiting for form... (attempt', attempts, '/', maxAttempts, ')');
+            setTimeout(waitForForm, 100);
+        } else {
+            console.log('[GMPTEC Form MVP] ❌ No WSForm found after', maxAttempts, 'attempts. Giving up.');
+        }
+    }
+
+    // Start waiting
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', waitForForm);
     } else {
-        window.gmptecCartFormMVP = new GMPTECCartFormIntegrationMVP({
-            formId: 1,           // ✅ Konfiguriert
-            productFieldId: 4     // ✅ Konfiguriert
-        });
+        waitForForm();
     }
 })();
 
