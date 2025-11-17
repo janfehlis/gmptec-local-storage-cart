@@ -86,13 +86,20 @@ class GMPTECCartFormIntegrationMVP {
             this.log(`✅ Validation passed (${cart.length} products)`);
         });
 
-        // Event 3: Nach Submit → Cart leeren
+        // Event 3: Nach Submit → Cart leeren + Field leeren
         $(document).on('wsf-submit-complete', (e, form_object, form_id, instance_id) => {
             if (form_id !== this.config.formId) return;
 
             this.log('✅ Form submitted successfully, clearing cart...');
+
+            // Cart leeren
             window.gmptecCart.clearCart();
-            this.log('🗑️ Cart cleared');
+
+            // Produkte-Field auch leeren
+            const fieldSelector = `#wsf-${instance_id}-field-${this.config.productFieldId}`;
+            $(fieldSelector).val('');
+
+            this.log('🗑️ Cart cleared & field emptied');
         });
 
         this.log('✅ All event handlers registered');
